@@ -18,7 +18,7 @@ namespace HandyControl.Controls
     [TemplatePart(Name = ElementTrack, Type = typeof(Track))]
     public class RangeSlider : TwoWayRangeBase
     {
-        #region Dely
+        #region Dely...
 
         #endregion
 
