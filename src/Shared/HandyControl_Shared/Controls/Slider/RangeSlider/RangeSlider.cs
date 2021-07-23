@@ -18,6 +18,10 @@ namespace HandyControl.Controls
     [TemplatePart(Name = ElementTrack, Type = typeof(Track))]
     public class RangeSlider : TwoWayRangeBase
     {
+        #region Dely
+
+        #endregion
+
         private const string ElementTrack = "PART_Track";
 
         private RangeTrack _track;
