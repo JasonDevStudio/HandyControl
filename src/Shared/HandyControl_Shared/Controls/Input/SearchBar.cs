@@ -10,7 +10,7 @@ namespace HandyControl.Controls
     public class SearchBar : TextBox, ICommandSource
     {
         public SearchBar()
-        {
+        {  
             CommandBindings.Add(new CommandBinding(ControlCommands.Search, (s, e) => OnSearchStarted()));
         }
 
@@ -79,10 +79,7 @@ namespace HandyControl.Controls
             get => (bool) GetValue(IsRealTimeProperty);
             set => SetValue(IsRealTimeProperty, ValueBoxes.BooleanBox(value));
         }
-
-        public static readonly DependencyProperty CommandProperty = DependencyProperty.Register(
-            "Command", typeof(ICommand), typeof(SearchBar), new PropertyMetadata(default(ICommand), OnCommandChanged));
-
+          
         private static void OnCommandChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
             var ctl = (SearchBar) d;
@@ -95,31 +92,7 @@ namespace HandyControl.Controls
                 newCommand.CanExecuteChanged += ctl.CanExecuteChanged;
             }
         }
-
-        public ICommand Command
-        {
-            get => (ICommand) GetValue(CommandProperty);
-            set => SetValue(CommandProperty, value);
-        }
-
-        public static readonly DependencyProperty CommandParameterProperty = DependencyProperty.Register(
-            "CommandParameter", typeof(object), typeof(SearchBar), new PropertyMetadata(default(object)));
-
-        public object CommandParameter
-        {
-            get => GetValue(CommandParameterProperty);
-            set => SetValue(CommandParameterProperty, value);
-        }
-
-        public static readonly DependencyProperty CommandTargetProperty = DependencyProperty.Register(
-            "CommandTarget", typeof(IInputElement), typeof(SearchBar), new PropertyMetadata(default(IInputElement)));
-
-        public IInputElement CommandTarget
-        {
-            get => (IInputElement) GetValue(CommandTargetProperty);
-            set => SetValue(CommandTargetProperty, value);
-        }
-
+         
         private void CanExecuteChanged(object sender, EventArgs e)
         {
             if (Command == null) return;

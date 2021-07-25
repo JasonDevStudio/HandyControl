@@ -11,12 +11,13 @@ namespace HandyControlDemo.ViewModel
     {
         public RangeSliderDemoViewModel()
         {
+            CheckBoxDelyValueChangedCmd = new(CheckBox_DelyValueChanged);
             //CommandManager.RegisterClassCommandBinding(typeof(RangeSlider), new CommandBinding(DelyValueChangedCmd)); 
             //CommandManager.RegisterClassCommandBinding(typeof(CheckBox), new CommandBinding(CheckBoxDelyValueChangedCmd)); 
         }
 
         public RelayCommand<RangeSlider> DelyValueChangedCmd => new(DelyValueChanged);
-        public RelayCommand<CheckBox> CheckBoxDelyValueChangedCmd => new(CheckBox_DelyValueChanged);
+        public RelayCommand<CheckBox> CheckBoxDelyValueChangedCmd { get; private set; } 
         public RelayCommand<RadioButton> RadioButtonDelyValueChangedCmd => new(RadioButton_DelyValueChanged);
          
         public ObservableCollection<FilterItem> FilterItems { get; set; } = new ObservableCollection<FilterItem>()

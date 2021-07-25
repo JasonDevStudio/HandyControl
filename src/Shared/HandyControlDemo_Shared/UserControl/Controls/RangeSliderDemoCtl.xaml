@@ -9,11 +9,13 @@
         <StackPanel Margin="32" Orientation="Horizontal">
             <StackPanel >
 
+                <hc:CheckBox IsChecked="False" Content="Not Binding" DelyCommand="{Binding CheckBoxDelyValueChangedCmd}" IsDely="True" DelyInterval="2000" GroupName="AAAAAAADDDDDD" IsCommand="True" />
+
                 <ItemsControl ItemsSource="{Binding FilterItems}" Margin="1">
                     <ItemsControl.ItemTemplate>
                         <DataTemplate>
                             <StackPanel Orientation="Horizontal" Margin="5">
-                                <hc:CheckBox IsChecked="{Binding IsChecked}" Content="{Binding Name}" Command="{Binding CheckBoxDelyValueChangedCmd}" IsDely="True" DelyInterval="2000" GroupName="{Binding GroupName}" IsCommand="True" /> 
+                                <hc:CheckBox IsChecked="{Binding IsChecked}" Content="{Binding Name}" DelyCommand="{Binding RangeSliderDemo.CheckBoxDelyValueChangedCmd, Mode=OneWay}" IsDely="True" DelyInterval="2000" GroupName="{Binding GroupName}" IsCommand="True" /> 
                             </StackPanel>
                         </DataTemplate>
                     </ItemsControl.ItemTemplate>

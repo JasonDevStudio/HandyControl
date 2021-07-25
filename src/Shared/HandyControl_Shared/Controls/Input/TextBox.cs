@@ -10,10 +10,10 @@ using HandyControl.Tools;
 
 namespace HandyControl.Controls
 {
-    public class TextBox : System.Windows.Controls.TextBox, IDataInput, IDelyControl
+    public class TextBox : System.Windows.Controls.TextBox, IDataInput, IDelyControl, ICommandSource
     {
         #region Dely
-
+         
         #region DependencyProperty
 
         public static readonly DependencyProperty IsCommandProperty = DependencyProperty.Register("IsCommand", typeof(bool), typeof(TextBox), new PropertyMetadata(ValueBoxes.FalseBox));
@@ -24,7 +24,16 @@ namespace HandyControl.Controls
 
         public static readonly DependencyProperty GroupNameProperty = DependencyProperty.Register("GroupName", typeof(string), typeof(TextBox), new PropertyMetadata(Guid.NewGuid().ToString()));
 
-        public static readonly DependencyProperty DelyChangedCmdProperty = DependencyProperty.Register("DelyChangedCmd", typeof(ICommand), typeof(TextBox), new PropertyMetadata(new RoutedCommand(nameof(DelyChangedCmd), typeof(TextBox))));
+        public static readonly DependencyProperty DelyCommandProperty = DependencyProperty.Register("DelyCommand", typeof(ICommand), typeof(TextBox), new PropertyMetadata(default(ICommand)));
+
+        public static readonly DependencyProperty CommandProperty = DependencyProperty.Register(
+            "Command", typeof(ICommand), typeof(TextBox), new PropertyMetadata(default(ICommand)));
+
+        public static readonly DependencyProperty CommandParameterProperty = DependencyProperty.Register(
+            "CommandParameter", typeof(object), typeof(TextBox), new PropertyMetadata(default(object)));
+
+        public static readonly DependencyProperty CommandTargetProperty = DependencyProperty.Register(
+            "CommandTarget", typeof(IInputElement), typeof(TextBox), new PropertyMetadata(default(IInputElement)));
 
         #endregion
 
@@ -54,6 +63,24 @@ namespace HandyControl.Controls
             set => SetValue(GroupNameProperty, value);
         }
 
+        public ICommand Command
+        {
+            get => (ICommand) GetValue(CommandProperty);
+            set => SetValue(CommandProperty, value);
+        }
+
+        public object CommandParameter
+        {
+            get => GetValue(CommandParameterProperty);
+            set => SetValue(CommandParameterProperty, value);
+        }
+
+        public IInputElement CommandTarget
+        {
+            get => (IInputElement) GetValue(CommandTargetProperty);
+            set => SetValue(CommandTargetProperty, value);
+        }
+
         public bool IsFirstChange { get; private set; } = true;
 
         public object OldValue { get; private set; }
@@ -67,18 +94,18 @@ namespace HandyControl.Controls
         #region Events
 
         public static readonly RoutedEvent DelyValueChangedEvent = EventManager.RegisterRoutedEvent("DelyValueChanged",
-            RoutingStrategy.Bubble, typeof(RoutedPropertyChangedEventHandler<DoubleRange>), typeof(TextBox));
+            RoutingStrategy.Bubble, typeof(RoutedPropertyChangedEventHandler<object>), typeof(TextBox));
 
-        public event RoutedPropertyChangedEventHandler<DoubleRange> DelyValueChanged
+        public event RoutedPropertyChangedEventHandler<object> DelyValueChanged
         {
             add => AddHandler(DelyValueChangedEvent, value);
             remove => RemoveHandler(DelyValueChangedEvent, value);
         }
 
-        public ICommand DelyChangedCmd
+        public ICommand DelyCommand
         {
-            get => GetValue(DelyChangedCmdProperty) as ICommand;
-            set => SetValue(DelyChangedCmdProperty, value);
+            get => (ICommand) GetValue(DelyCommandProperty);
+            set => SetValue(DelyCommandProperty, value);
         }
 
         #endregion
@@ -97,17 +124,8 @@ namespace HandyControl.Controls
 
                     try
                     {
-                        Dispatcher.Invoke(
-                           new Action(
-                               delegate
-                               {
-                                   if (this.IsCommand)
-                                       this.DelyChangedCmd?.Execute(this);
-                                   else
-                                       this.RaiseEvent(new RoutedPropertyChangedEventArgs<DoubleRange>((DoubleRange) this.OldValue, (DoubleRange) this.NewValue) { RoutedEvent = DelyValueChangedEvent });
-                               }
-                           )
-                       , DispatcherPriority.Send);
+                        this.OnDelyValueChanged();
+                        this.OldValue = this.NewValue;
                     }
                     finally
                     {
@@ -125,34 +143,59 @@ namespace HandyControl.Controls
         {
             try
             {
-                this.NewValue = Text;
-
                 if (this.IsDely)
                 {
-                    if (this.IsFirstChange)
-                    {
-                        this.IsFirstChange = false;
-                        return;
-                    }
+                    this.NewValue = Text;
 
+                    if (this.NewValue == this.OldValue)
+                        return;
+                     
                     this.InitTimer().Start();
                 }
             }
             finally
             {
                 base.OnTextChanged(e);
-                VerifyData();
             }
         }
+         
+        private void OnDelyValueChanged()
+        {
+            Dispatcher.Invoke(
+               new Action(
+                   delegate
+                   {
+                       if (this.IsCommand)
+                       {
+                           this.CommandParameter ??= this;
+                           this.CommandTarget ??= this;
 
+                           switch (DelyCommand)
+                           {
+                               case null:
+                                   return;
+                               case RoutedCommand command:
+                                   command.Execute(CommandParameter, CommandTarget);
+                                   break;
+                               default:
+                                   DelyCommand.Execute(CommandParameter);
+                                   break;
+                           }
+                       }
+                       else
+                           this.RaiseEvent(new RoutedPropertyChangedEventArgs<object>(this.NewValue, this.NewValue) { RoutedEvent = DelyValueChangedEvent });
+                   }
+               )
+           , DispatcherPriority.Send);
+        }
+         
         #endregion
 
         #endregion
 
         public TextBox()
         {
-            CommandBindings.Add(new CommandBinding(ControlCommands.Clear, (s, e) => SetCurrentValue(TextProperty, "")));
-            CommandBindings.Add(new CommandBinding(DelyChangedCmd, (s, e) => DelyChangedCmd?.Execute(this)));
+            CommandBindings.Add(new CommandBinding(ControlCommands.Clear, (s, e) => SetCurrentValue(TextProperty, ""))); 
         }
 
         public Func<string, OperationResult<bool>> VerifyFunc { get; set; }

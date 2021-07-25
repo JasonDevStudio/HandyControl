@@ -17,9 +17,7 @@ namespace HandyControl.Controls
         #region Dely
 
         public CheckBox()
-        {
-            CommandBindings.Add(new CommandBinding(ControlCommands.Dely));
-            // CommandBindings.Add(new CommandBinding(ControlCommands.Dely, (s, e) => OnDelyValueChanged()));
+        { 
         }
 
         #region DependencyProperty
@@ -106,7 +104,6 @@ namespace HandyControl.Controls
                     try
                     { 
                         this.OnDelyValueChanged(); 
-                        this.OldValue = this.NewValue;
                     }
                     finally
                     {
@@ -128,12 +125,6 @@ namespace HandyControl.Controls
 
                 if (this.IsDely)
                 {
-                    //if (this.IsFirstChange)
-                    //{
-                    //    this.IsFirstChange = false;
-                    //    return;
-                    //}
-
                     if (this.NewValue == this.OldValue)
                         return;
 
@@ -153,13 +144,7 @@ namespace HandyControl.Controls
                 this.NewValue = false;
 
                 if (this.IsDely)
-                {
-                    //if (this.IsFirstChange)
-                    //{
-                    //    this.IsFirstChange = false;
-                    //    return;
-                    //}
-
+                { 
                     if (this.NewValue == this.OldValue)
                         return;
 
@@ -180,7 +165,10 @@ namespace HandyControl.Controls
                    {
                        if (this.IsCommand)
                        {
-                           switch (Command)
+                           this.CommandParameter ??= this;
+                           this.CommandTarget ??= this;
+
+                           switch (DelyCommand)
                            {
                                case null:
                                    return;
@@ -188,7 +176,7 @@ namespace HandyControl.Controls
                                    command.Execute(CommandParameter, CommandTarget);
                                    break;
                                default:
-                                   Command.Execute(CommandParameter);
+                                   DelyCommand.Execute(CommandParameter);
                                    break;
                            }
                        }
