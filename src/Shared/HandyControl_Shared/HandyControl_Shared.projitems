@@ -31,6 +31,12 @@
     <Compile Include="$(MSBuildThisFileDirectory)Controls\Block\RunningBlock\RunningBorder.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Controls\Button\SplitButton.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Controls\Carousel\CarouselItem.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Controls\DelyControls\ListBox.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Controls\DelyControls\RadioButton.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Controls\DelyControls\CheckBox.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Controls\DelyControls\DelyArgs.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Controls\DelyControls\IDelyControl.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Controls\DelyControls\DelyHelper.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Controls\Dialog\DialogContainer.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Controls\Growl\GrowlWindow.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Controls\Image\ImageBlock.cs" />

@@ -4,6 +4,8 @@
 
     <Style BasedOn="{StaticResource RadioButtonBaseStyle}" TargetType="RadioButton"/>
 
+    <Style BasedOn="{StaticResource RadioButtonBaseStyle}" TargetType="hc:RadioButton"/>
+
     <Style x:Key="RadioButtonIcon" BasedOn="{StaticResource RadioButtonIconBaseStyle}" TargetType="RadioButton"/>
 
     <Style x:Key="RadioGroupItemDefault" BasedOn="{StaticResource RadioGroupItemBaseStyle}" TargetType="RadioButton"/>

@@ -4,6 +4,7 @@ using System.Windows.Controls;
 using System.Windows.Controls.Primitives;
 using HandyControl.Controls;
 using HandyControl.Data;
+using RadioButton = System.Windows.Controls.RadioButton;
 
 namespace HandyControl.Tools
 {

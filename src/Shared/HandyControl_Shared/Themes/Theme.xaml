@@ -4235,7 +4235,9 @@
 		</Setter>
 	</Style>
 	<Style BasedOn="{StaticResource CheckBoxBaseStyle}" TargetType="CheckBox" />
+	<Style BasedOn="{StaticResource CheckBoxBaseStyle}" TargetType="hc:CheckBox" />
 	<Style BasedOn="{StaticResource RadioButtonBaseStyle}" TargetType="RadioButton" />
+	<Style BasedOn="{StaticResource RadioButtonBaseStyle}" TargetType="hc:RadioButton" />
 	<Style x:Key="RadioButtonIcon" BasedOn="{StaticResource RadioButtonIconBaseStyle}" TargetType="RadioButton" />
 	<Style x:Key="RadioGroupItemDefault" BasedOn="{StaticResource RadioGroupItemBaseStyle}" TargetType="RadioButton" />
 	<Style x:Key="RadioGroupItemHorizontalFirst" BasedOn="{StaticResource RadioGroupItemBaseStyle}" TargetType="RadioButton">
@@ -12109,6 +12111,7 @@
 		</Setter>
 	</Style>
 	<Style BasedOn="{StaticResource ListBoxBaseStyle}" TargetType="ListBox" />
+	<Style BasedOn="{StaticResource ListBoxBaseStyle}" TargetType="hc:ListBox" />
 	<Style x:Key="ListBoxCustom" BasedOn="{StaticResource ListBoxBaseStyle}" TargetType="ListBox">
 		<Setter Property="ItemContainerStyle" Value="{StaticResource ListBoxItemCustom}" />
 		<Setter Property="HorizontalContentAlignment" Value="Stretch" />

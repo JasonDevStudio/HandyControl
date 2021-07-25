@@ -8,6 +8,11 @@ namespace HandyControl.Interactivity
     public static class ControlCommands
     {
         /// <summary>
+        ///     延迟
+        /// </summary>
+        public static RoutedCommand Dely { get; } = new(nameof(Dely), typeof(ControlCommands));
+
+        /// <summary>
         ///     搜索
         /// </summary>
         public static RoutedCommand Search { get; } = new(nameof(Search), typeof(ControlCommands));
