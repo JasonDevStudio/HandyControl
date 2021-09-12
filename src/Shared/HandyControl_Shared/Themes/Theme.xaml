@@ -9,6 +9,7 @@
 	<converter:Boolean2BooleanReConverter x:Key="Boolean2BooleanReConverter" />
 	<converter:Boolean2VisibilityReConverter x:Key="Boolean2VisibilityReConverter" />
 	<converter:BooleanArr2VisibilityConverter x:Key="BooleanArr2VisibilityConverter" />
+	<converter:BooleanArr2BooleanConverter x:Key="BooleanArr2BooleanConverter" />
 	<converter:Long2FileSizeConverter x:Key="Long2FileSizeConverter" />
 	<converter:String2VisibilityConverter x:Key="String2VisibilityConverter" />
 	<converter:String2VisibilityReConverter x:Key="String2VisibilityReConverter" />
@@ -31,6 +32,7 @@
 	<converter:Double2GridLengthConverter x:Key="Double2GridLengthConverter" />
 	<converter:DoubleMinConverter x:Key="DoubleMinConverter" />
 	<converter:Object2StringConverter x:Key="Object2StringConverter" />
+	<converter:DataGridSelectAllButtonVisibilityConverter x:Key="DataGridSelectAllButtonVisibilityConverter" />
 	<Color x:Key="EffectShadowColor">#88000000</Color>
 	<system:Double x:Key="LargeFontSize">24</system:Double>
 	<system:Double x:Key="HeadFontSize">20</system:Double>
@@ -11383,6 +11385,113 @@
 			</Setter.Value>
 		</Setter>
 	</Style>
+	<Style x:Key="AutoCompleteTextBoxInternal" BasedOn="{StaticResource ComboBoxEditableTextBox}" TargetType="TextBox" />
+	<Style x:Key="AutoCompleteTextBoxItemBaseStyle" TargetType="ComboBoxItem">
+		<Setter Property="Padding" Value="{StaticResource DefaultControlPadding}" />
+		<Setter Property="SnapsToDevicePixels" Value="True" />
+		<Setter Property="Background" Value="Transparent" />
+		<Setter Property="BorderBrush" Value="Transparent" />
+		<Setter Property="BorderThickness" Value="0" />
+		<Setter Property="MinHeight" Value="{StaticResource DefaultControlHeight}" />
+		<Setter Property="Focusable" Value="False" />
+		<Setter Property="FocusVisualStyle" Value="{x:Null}" />
+		<Setter Property="Template">
+			<Setter.Value>
+				<ControlTemplate TargetType="ComboBoxItem">
+					<Border x:Name="Bd" BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="{TemplateBinding BorderThickness}" Background="{TemplateBinding Background}" Padding="{TemplateBinding Padding}" SnapsToDevicePixels="true">
+						<ContentPresenter HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}" SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" VerticalAlignment="{TemplateBinding VerticalContentAlignment}" />
+					</Border>
+					<ControlTemplate.Triggers>
+						<MultiTrigger>
+							<MultiTrigger.Conditions>
+								<Condition Property="IsSelected" Value="False" />
+								<Condition Property="IsMouseOver" Value="True" />
+							</MultiTrigger.Conditions>
+							<Setter Property="Background" TargetName="Bd" Value="{DynamicResource SecondaryRegionBrush}" />
+						</MultiTrigger>
+						<Trigger Property="IsSelected" Value="True">
+							<Setter Property="Background" TargetName="Bd" Value="{DynamicResource PrimaryBrush}" />
+							<Setter Property="Foreground" Value="White" />
+						</Trigger>
+					</ControlTemplate.Triggers>
+				</ControlTemplate>
+			</Setter.Value>
+		</Setter>
+	</Style>
+	<Style x:Key="AutoCompleteTextBoxBaseStyle" TargetType="hc:AutoCompleteTextBox">
+		<Setter Property="FocusVisualStyle" Value="{x:Null}" />
+		<Setter Property="Background" Value="{DynamicResource RegionBrush}" />
+		<Setter Property="hc:BorderElement.CornerRadius" Value="{StaticResource DefaultCornerRadius}" />
+		<Setter Property="BorderBrush" Value="{DynamicResource BorderBrush}" />
+		<Setter Property="Foreground" Value="{DynamicResource PrimaryTextBrush}" />
+		<Setter Property="BorderThickness" Value="1" />
+		<Setter Property="ScrollViewer.HorizontalScrollBarVisibility" Value="Auto" />
+		<Setter Property="ScrollViewer.VerticalScrollBarVisibility" Value="Auto" />
+		<Setter Property="MinHeight" Value="{StaticResource DefaultControlHeight}" />
+		<Setter Property="ScrollViewer.CanContentScroll" Value="true" />
+		<Setter Property="ScrollViewer.PanningMode" Value="Both" />
+		<Setter Property="Stylus.IsFlicksEnabled" Value="False" />
+		<Setter Property="Padding" Value="{StaticResource DefaultInputPadding}" />
+		<Setter Property="VerticalContentAlignment" Value="Center" />
+		<Setter Property="Validation.ErrorTemplate" Value="{x:Null}" />
+		<Setter Property="ItemContainerStyle" Value="{StaticResource AutoCompleteTextBoxItemBaseStyle}" />
+		<Setter Property="IsTabStop" Value="false" />
+		<Setter Property="hc:Empty.ShowEmpty" Value="True" />
+		<Setter Property="Template">
+			<Setter.Value>
+				<ControlTemplate TargetType="hc:AutoCompleteTextBox">
+					<hc:SimplePanel>
+						<Border CornerRadius="{Binding Path=(hc:BorderElement.CornerRadius),RelativeSource={RelativeSource TemplatedParent}}" BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="{TemplateBinding BorderThickness}" Background="{TemplateBinding Background}" SnapsToDevicePixels="true">
+							<TextBox x:Name="PART_SearchTextBox" Padding="{TemplateBinding Padding}" Style="{StaticResource AutoCompleteTextBoxInternal}" />
+						</Border>
+						<Popup x:Name="PART_Popup" AllowsTransparency="true" IsOpen="{Binding IsDropDownOpen, Mode=TwoWay, RelativeSource={RelativeSource TemplatedParent}}" Margin="1" PopupAnimation="{StaticResource {x:Static SystemParameters.ComboBoxPopupAnimationKey}}" Placement="Bottom">
+							<Border BorderThickness="0,1,0,0" Effect="{StaticResource EffectShadow2}" Margin="8,0,8,8" CornerRadius="{Binding Path=(hc:BorderElement.CornerRadius),RelativeSource={RelativeSource TemplatedParent}}" x:Name="dropDownBorder" MinWidth="{Binding ActualWidth, ElementName=toggleButton}" MaxHeight="{TemplateBinding MaxDropDownHeight}" BorderBrush="{DynamicResource BorderBrush}" Background="{DynamicResource RegionBrush}">
+								<hc:ToggleBlock IsChecked="{Binding HasItems,RelativeSource={RelativeSource TemplatedParent},Mode=OneWay}" VerticalContentAlignment="Stretch" HorizontalContentAlignment="Stretch">
+									<hc:ToggleBlock.CheckedContent>
+										<ScrollViewer Margin="0,4">
+											<ItemsPresenter x:Name="ItemsPresenter" KeyboardNavigation.DirectionalNavigation="Contained" SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" />
+										</ScrollViewer>
+									</hc:ToggleBlock.CheckedContent>
+									<hc:ToggleBlock.UnCheckedContent>
+										<hc:Empty />
+									</hc:ToggleBlock.UnCheckedContent>
+								</hc:ToggleBlock>
+							</Border>
+						</Popup>
+					</hc:SimplePanel>
+					<ControlTemplate.Triggers>
+						<Trigger Property="HasItems" Value="false">
+							<Setter Property="Height" TargetName="dropDownBorder" Value="95" />
+						</Trigger>
+						<Trigger Property="hc:DropDownElement.ConsistentWidth" Value="True">
+							<Setter Property="MaxWidth" TargetName="dropDownBorder" Value="{Binding ActualWidth, ElementName=PART_SearchTextBox}" />
+							<Setter Property="MinWidth" TargetName="dropDownBorder" Value="{Binding ActualWidth, ElementName=PART_SearchTextBox}" />
+						</Trigger>
+						<Trigger Property="hc:DropDownElement.AutoWidth" Value="True">
+							<Setter Property="MaxWidth" TargetName="dropDownBorder" Value="{x:Static system:Double.MaxValue}" />
+							<Setter Property="MinWidth" TargetName="dropDownBorder" Value="{Binding ActualHeight, ElementName=PART_SearchTextBox}" />
+						</Trigger>
+						<Trigger Property="IsMouseOver" Value="true" SourceName="PART_SearchTextBox">
+							<Setter Property="BorderBrush" Value="{DynamicResource SecondaryBorderBrush}" />
+						</Trigger>
+						<MultiTrigger>
+							<MultiTrigger.Conditions>
+								<Condition Property="IsMouseOver" Value="true" />
+								<Condition Property="IsFocused" Value="false" SourceName="PART_SearchTextBox" />
+							</MultiTrigger.Conditions>
+							<Setter Property="BorderBrush" Value="{DynamicResource SecondaryBorderBrush}" />
+						</MultiTrigger>
+						<Trigger Property="IsFocused" Value="True" SourceName="PART_SearchTextBox">
+							<Setter Property="BorderBrush" Value="{DynamicResource PrimaryBrush}" />
+						</Trigger>
+						<Trigger Property="IsEnabled" Value="false">
+							<Setter Property="Opacity" Value="0.4" />
+						</Trigger>
+					</ControlTemplate.Triggers>
+				</ControlTemplate>
+			</Setter.Value>
+		</Setter>
+	</Style>
 	<Style BasedOn="{StaticResource BadgeBaseStyle}" TargetType="hc:Badge">
 		<Setter Property="Foreground" Value="{DynamicResource PrimaryTextBrush}" />
 	</Style>
@@ -11636,6 +11745,7 @@
 		<Setter Property="ScrollViewer.CanContentScroll" Value="True" />
 		<Setter Property="BorderThickness" Value="0" />
 		<Setter Property="ItemContainerStyle" Value="{StaticResource ClockListBoxItemStyle}" />
+		<Setter Property="HorizontalContentAlignment" Value="Center" />
 	</Style>
 	<Style TargetType="hc:ListClock">
 		<Setter Property="BorderThickness" Value="0,1,0,0" />
@@ -11759,7 +11869,6 @@
 		<Setter Property="SnapsToDevicePixels" Value="true" />
 		<Setter Property="Margin" Value="0,0,0,4" />
 		<Setter Property="Padding" Value="0,6" />
-		<Setter Property="MinHeight" Value="44" />
 		<Setter Property="Validation.ErrorTemplate" Value="{x:Null}" />
 		<Setter Property="ValidationErrorTemplate">
 			<Setter.Value>
@@ -11809,8 +11918,7 @@
 	<Style x:Key="DataGridColumnHeaderStyle" TargetType="DataGridColumnHeader">
 		<Setter Property="VerticalContentAlignment" Value="Center" />
 		<Setter Property="Foreground" Value="{DynamicResource PrimaryTextBrush}" />
-		<Setter Property="Padding" Value="12,6,12,12" />
-		<Setter Property="MinHeight" Value="44" />
+		<Setter Property="Padding" Value="12,0" />
 		<Setter Property="Template">
 			<Setter.Value>
 				<ControlTemplate TargetType="DataGridColumnHeader">
@@ -11889,6 +11997,8 @@
 		<Setter Property="CellStyle" Value="{StaticResource DataGridCellStyle}" />
 		<Setter Property="Padding" Value="6" />
 		<Setter Property="ColumnWidth" Value="*" />
+		<Setter Property="RowHeight" Value="44" />
+		<Setter Property="ColumnHeaderHeight" Value="44" />
 		<Setter Property="hc:DataGridAttach.TextColumnStyle" Value="{StaticResource DataGridTextColumnStyle}" />
 		<Setter Property="hc:DataGridAttach.EditingTextColumnStyle" Value="{StaticResource TextBoxBaseStyle}" />
 		<Setter Property="hc:DataGridAttach.ComboBoxColumnStyle" Value="{StaticResource TextBlockComboBoxStyle}" />
@@ -11931,7 +12041,14 @@
 											<RowDefinition Height="Auto" />
 											<RowDefinition Height="*" />
 										</Grid.RowDefinitions>
-										<Button Command="{x:Static DataGrid.SelectAllCommand}" Margin="0,0,0,6" Visibility="{Binding HeadersVisibility, ConverterParameter={x:Static DataGridHeadersVisibility.All}, Converter={x:Static DataGrid.HeadersVisibilityConverter}, RelativeSource={RelativeSource AncestorType=DataGrid}}" Width="{Binding CellsPanelHorizontalOffset, RelativeSource={RelativeSource AncestorType=DataGrid},Converter={StaticResource DoubleMinConverter}}" Style="{StaticResource ButtonIcon}" hc:IconElement.Geometry="{StaticResource AllGeometry}" Foreground="{DynamicResource PrimaryBrush}" />
+										<Button Command="{x:Static DataGrid.SelectAllCommand}" Width="{Binding CellsPanelHorizontalOffset, RelativeSource={RelativeSource AncestorType=DataGrid},Converter={StaticResource DoubleMinConverter}}" Style="{StaticResource ButtonIcon}" hc:IconElement.Geometry="{StaticResource AllGeometry}" Foreground="{DynamicResource PrimaryBrush}">
+											<Button.Visibility>
+												<MultiBinding Converter="{StaticResource DataGridSelectAllButtonVisibilityConverter}">
+													<Binding Path="HeadersVisibility" RelativeSource="{RelativeSource AncestorType=DataGrid}" />
+													<Binding Path="(hc:DataGridAttach.ShowSelectAllButton)" RelativeSource="{RelativeSource AncestorType=DataGrid}" />
+												</MultiBinding>
+											</Button.Visibility>
+										</Button>
 										<DataGridColumnHeadersPresenter x:Name="PART_ColumnHeadersPresenter" Grid.ColumnSpan="2" Grid.Row="0" Grid.Column="1" Visibility="{Binding HeadersVisibility, ConverterParameter={x:Static DataGridHeadersVisibility.Column}, Converter={x:Static DataGrid.HeadersVisibilityConverter}, RelativeSource={RelativeSource AncestorType=DataGrid}}" />
 										<hc:ToggleBlock IsChecked="{Binding HasItems,RelativeSource={RelativeSource AncestorType=DataGrid},Mode=OneWay}" Grid.ColumnSpan="3" Grid.Column="0" Grid.Row="1" VerticalContentAlignment="Stretch" HorizontalContentAlignment="Stretch">
 											<hc:ToggleBlock.CheckedContent>
@@ -13021,6 +13138,7 @@
 	<Style BasedOn="{StaticResource TreeViewItemBaseStyle}" TargetType="TreeViewItem" />
 	<Style BasedOn="{StaticResource TreeViewBaseStyle}" TargetType="TreeView" />
 	<Style BasedOn="{StaticResource WatermarkBaseStyle}" TargetType="hc:Watermark" />
+	<Style BasedOn="{StaticResource AutoCompleteTextBoxBaseStyle}" TargetType="hc:AutoCompleteTextBox" />
 	<ControlTemplate x:Key="TipSliderThumbHorizontalTop" TargetType="Thumb">
 		<hc:AxleCanvas>
 			<Label Name="LabelValue" IsHitTestVisible="False" Opacity="0" Canvas.Bottom="28" Style="{StaticResource LabelPrimary}" Content="{Binding Value,RelativeSource={RelativeSource AncestorType=Slider}}" ContentStringFormat="{Binding Path=(hc:TipElement.StringFormat),RelativeSource={RelativeSource AncestorType=Slider}}" />

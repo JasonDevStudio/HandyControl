@@ -83,6 +83,8 @@ HandyControl 项目已加入 [dotNET China](https://gitee.com/dotnetchina)  组�
 <a href="https://github.com/Epacik" target="_blank"><img style="border-radius:50%!important" width="64px" alt="Epacik" src="https://avatars.githubusercontent.com/u/23077337?s=64&v=4"></a>
 <a href="https://github.com/ChoKaPeek" target="_blank"><img style="border-radius:50%!important" width="64px" alt="ChoKaPeek" src="https://avatars.githubusercontent.com/u/16904907?s=64&v=4"></a>
 <a href="https://github.com/shaosu" target="_blank"><img style="border-radius:50%!important" width="64px" alt="shaosu" src="https://avatars.githubusercontent.com/u/12237247?s=64&v=4"></a>
+<a href="https://github.com/imba-tjd" target="_blank"><img style="border-radius:50%!important" width="64px" alt="imba-tjd" src="https://avatars.githubusercontent.com/u/24759802?s=64&v=4"></a>
+<a href="https://github.com/jhm-ciberman" target="_blank"><img style="border-radius:50%!important" width="64px" alt="jhm-ciberman" src="https://avatars.githubusercontent.com/u/7988351?s=64&v=4"></a>
 
 ## 赞助者
 
@@ -134,7 +136,6 @@ HandyControl 项目已加入 [dotNET China](https://gitee.com/dotnetchina)  组�
 [![Visual Studio Community 2019](https://gitee.com/handyorg/HandyOrgResource/raw/master/HandyControl/Resources/vs2019_logo.png)](https://visualstudio.microsoft.com/free-developer-offers/)
 [![JetBrains](https://gitee.com/handyorg/HandyOrgResource/raw/master/HandyControl/Resources/resharper_logo.png)](https://www.jetbrains.com/?from=HandyControl)
 [![Cake](https://gitee.com/handyorg/HandyOrgResource/raw/master/HandyControl/Resources/cake_logo.png)](https://cakebuild.net/)
-[![Gitter](https://gitee.com/handyorg/HandyOrgResource/raw/master/HandyControl/Resources/gitter_logo.png)](https://gitter.im/)
 
 ## 使用HandyControl的项目
 
@@ -184,6 +185,10 @@ Step 4: 开始编码
 
 ## 最新示例
 
+### AutoCompleteTextBox
+
+![AutoCompleteTextBox](https://raw.githubusercontent.com/HandyOrg/HandyOrgResource/master/HandyControl/Resources/AutoCompleteTextBox.gif)
+
 ### ElementGroup
 
 ![ElementGroup](https://gitee.com/handyorg/HandyOrgResource/raw/master/HandyControl/Resources/ElementGroup.png)
@@ -200,11 +205,11 @@ Step 4: 开始编码
 
 ![CheckComboBox](https://gitee.com/handyorg/HandyOrgResource/raw/master/HandyControl/Resources/CheckComboBox.png)
 
+## 历史发布
+
 ### ImageSelector
 
 ![ImageSelector](https://gitee.com/handyorg/HandyOrgResource/raw/master/HandyControl/Resources/ImageSelector.png)
-
-## 历史发布
 
 ### PropertyGrid
 

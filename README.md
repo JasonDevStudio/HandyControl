@@ -77,6 +77,8 @@
 <a href="https://github.com/Epacik" target="_blank"><img style="border-radius:50%!important" width="64px" alt="Epacik" src="https://avatars.githubusercontent.com/u/23077337?s=64&v=4"></a>
 <a href="https://github.com/ChoKaPeek" target="_blank"><img style="border-radius:50%!important" width="64px" alt="ChoKaPeek" src="https://avatars.githubusercontent.com/u/16904907?s=64&v=4"></a>
 <a href="https://github.com/shaosu" target="_blank"><img style="border-radius:50%!important" width="64px" alt="shaosu" src="https://avatars.githubusercontent.com/u/12237247?s=64&v=4"></a>
+<a href="https://github.com/imba-tjd" target="_blank"><img style="border-radius:50%!important" width="64px" alt="imba-tjd" src="https://avatars.githubusercontent.com/u/24759802?s=64&v=4"></a>
+<a href="https://github.com/jhm-ciberman" target="_blank"><img style="border-radius:50%!important" width="64px" alt="jhm-ciberman" src="https://avatars.githubusercontent.com/u/7988351?s=64&v=4"></a>
 
 ## Backers
 
@@ -128,7 +130,6 @@
 [![Visual Studio Community 2019](https://gitee.com/handyorg/HandyOrgResource/raw/master/HandyControl/Resources/vs2019_logo.png)](https://visualstudio.microsoft.com/free-developer-offers/)
 [![JetBrains](https://gitee.com/handyorg/HandyOrgResource/raw/master/HandyControl/Resources/resharper_logo.png)](https://www.jetbrains.com/?from=HandyControl)
 [![Cake](https://gitee.com/handyorg/HandyOrgResource/raw/master/HandyControl/Resources/cake_logo.png)](https://cakebuild.net/)
-[![Gitter](https://gitee.com/handyorg/HandyOrgResource/raw/master/HandyControl/Resources/gitter_logo.png)](https://gitter.im/)
 
 ## Projects using HandyControl
 
@@ -178,6 +179,10 @@ Step 4: Enjoy coding
 
 ## Latest examples
 
+### AutoCompleteTextBox
+
+![AutoCompleteTextBox](https://raw.githubusercontent.com/HandyOrg/HandyOrgResource/master/HandyControl/Resources/AutoCompleteTextBox.gif)
+
 ### ElementGroup
 
 ![ElementGroup](https://raw.githubusercontent.com/HandyOrg/HandyOrgResource/master/HandyControl/Resources/ElementGroup.png)
@@ -194,11 +199,11 @@ Step 4: Enjoy coding
 
 ![CheckComboBox](https://raw.githubusercontent.com/HandyOrg/HandyOrgResource/master/HandyControl/Resources/CheckComboBox.png)
 
+## History publication
+
 ### ImageSelector
 
 ![ImageSelector](https://raw.githubusercontent.com/HandyOrg/HandyOrgResource/master/HandyControl/Resources/ImageSelector.png)
-
-## History publication
 
 ### PropertyGrid
 
